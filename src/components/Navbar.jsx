@@ -32,8 +32,8 @@ export default function Navbar() {
                                 <NavLink className={(e)=>e.isActive?"active":"notActive"} to="/" >Home</NavLink>
                                 <NavLink className={(e)=>e.isActive?"active":"notActive"} to="/search">Search</NavLink>
                                 <NavLink className={(e)=>e.isActive?"active":"notActive"} to="/upcoming">Upcoming</NavLink>
-
                                 <NavLink className={(e)=>e.isActive?"active":"notActive"} to="/popular">Popular</NavLink>
+                                <NavLink className={(e)=>e.isActive?"active":"notActive"} to="/video">Trailer</NavLink>
 
                             </div>
                         </div>
@@ -89,6 +89,7 @@ export default function Navbar() {
                     <NavLink className={(e)=>e.isActive?"active":"notActive"} to="/upcoming">Upcoming</NavLink>
 
                     <NavLink className={(e)=>e.isActive?"active":"notActive"} to="/popular">Popular</NavLink>
+                    <NavLink className={(e)=>e.isActive?"active":"notActive"} to="/video">Trailer</NavLink>
 
                     
                 </div>

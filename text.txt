@@ -1,0 +1,29 @@
+https://www.youtube.com/watch?v={id}
+
+search movie 
+keyword param
+  1. query
+  2. page
+SearchByMovie
+  1. query 
+  2. include_adult
+  3. language (en-US)
+  4. primary_release_year
+  5. region
+  6. page
+  7. year 
+SearchByPersonName
+  1. include_adult
+  2. language
+  3. page
+  4. query
+SearchByTv
+  1. query
+  2.first_air_date_year
+  3.include_adult
+  4. language
+  5. page
+  6 year
+tredingAll
+   1. /day 
+   2. /week

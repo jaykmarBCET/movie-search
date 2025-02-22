@@ -1,43 +1,36 @@
 import React, { useEffect } from 'react'
 import MovieList from './MovieList';
+import { useMovie } from '../store/useMovie';
 
 export default function UpcomingMovie() {
-    const  [upcomingMovies, setUpcomingMovies] = React.useState([]);
-    const [loading, setLoading] = React.useState(false);
-    const [error, setError] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
 
-    const getMovies = () => {
-      fetch("https://api.themoviedb.org/3/movie/upcoming?api_key=f1791c340b1408803e2c923e32217f0b&append_to_response=videos")
-      .then((res) => res.json())
-      .then((res) => {
-        const getData = res.results;
-        setUpcomingMovies(getData);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-    };
-    useEffect(()=>{
-      getMovies();
-      setLoading(false);
-     },[])
+  const { upcoming, upcomingMovie } = useMovie()
+
+  useEffect(() => {
+    setLoading(true)
+    upcomingMovie()
+    setLoading(false);
+  }, [])
   return (
     <>
-      <center className='text-2xl my-10 text-center font-bold drop-shadow-md py-2 bg-gray-200 w-80 rounded-lg mx-auto'><h1>Upcoming  Movies</h1></center>
+      <center className='text-2xl my-10 text-center font-bold  drop-shadow-md py-2 rounded-lg mx-auto'><h1>Upcoming  Movies</h1></center>
 
-     {
-      loading ? <p>Loading...</p> :(
-        <div>
-          {
-            error?<h1>Something have an error {error}</h1>:(
+      {
+        loading ? <p>Loading...</p> : (
+          <div>
+            {
+
               <div>
-                <MovieList movies={upcomingMovies}></MovieList>
+                {
+                  upcoming?<MovieList movies={upcoming}></MovieList>:""
+                }
               </div>
-            )
-          }
-        </div>
-      )
-     }
+
+            }
+          </div>
+        )
+      }
     </>
   )
 }

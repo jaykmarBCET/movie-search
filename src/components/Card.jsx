@@ -1,58 +1,65 @@
 import { useState } from "react";
 import Video from "./Video";
 import { FaWindowClose } from "react-icons/fa";
+import { languageCodes } from "../constant/languageCode";
 
 const Card = ({ data }) => {
-    
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-   
-    const posterPath = "https://image.tmdb.org/t/p/w500/" + data.poster_path;
-    const language = data.original_language === "hi" ? "Hindi" : "English";
+  const posterPath = `https://image.tmdb.org/t/p/w500/${data.poster_path}`;
 
-    return (
-        <div className="card  overflow-hidden  hover:transition-all hover:ease-in-out transition-shadow my-2 mr-2 w-56  text-white bg-black rounded-lg  shadow-lg shadow-gray-950  ">
-            <div className='relative'>
-                <img src={posterPath} alt="" className='w-72 h-56 hover:opacity-45 -z-20 hover:rounded-lg hover:scale-110 ease-in-out duration-300 hover:motion-safe:animate-spin  ' />
-            </div>
-            <h1 className='text-center text-4xl font-bold'>{data.title}</h1>
-            <div className='w-full h-full flex flex-col'>
-                <p className='text-center'>Language: {language}</p>
-                <div className='text-center'>
-                    <p>release Date: {data.release_date}</p>
-                    <p>Rating 10/{data.vote_average}</p>
-                    <p>Rating Count  {data.vote_count}</p>
-                    <p>popularity : {data.popularity}</p>
-                </div>
-                <div className="flex flex-wrap">
-                    <button className='btn bg-blue-800 py-2 px-4  mb-4  rounded-lg mx-auto  hover:bg-blue-900 mt-10'>Download</button>
-                    <button onClick={()=>{setIsModalOpen(true)}} className='btn bg-blue-800 py-2 px-4  mb-4 rounded-lg mx-auto  hover:bg-blue-900 mt-10'>Trailer</button>
-                
-                        <Modal movideId={data.id} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-                    
+  const findLanguage = (lenCode) => {
+    const language = languageCodes.find((item) => item.code === lenCode);
+    return language ? language.name : "Unknown";
+  };
 
-                </div>
-            </div>
+  const language = findLanguage(data.original_language);
+
+  return (
+    <div className="relative w-64 bg-gray-900 mx-2 my-2 text-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+      <img src={posterPath} alt={data.title} className="w-full h-72 object-cover" />
+      <div className="p-4">
+        <h1 className="text-xl font-bold text-center mb-2">{data.title}</h1>
+        <p className="text-sm text-center text-gray-400">Language: {language}</p>
+        <div className="mt-2 text-sm text-gray-300">
+          <p>Release Date: {data.release_date}</p>
+          <p>Rating: ⭐ {data.vote_average}/10</p>
+          <p>Votes: {data.vote_count}</p>
+          <p>Popularity: {data.popularity}</p>
         </div>
-    )
-}
-
-const Modal = ({ isOpen, onClose, movideId }) => {
-    if (!isOpen) return null;
-    
-
-    return (
-        <div className="  z-10 fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center  flex-wrap ">
-            <div className=" text-black  rounded-lg shadow-lg w-full max-w-md ">
-                <div className="flex  justify-between items-center relavite">
-                    <h5 className="text-lg font-semibold"></h5>
-                    <button onClick={onClose} className="text-black text-4xl absolute mb-10 rounded-xl">
-                    <FaWindowClose />
-                    </button>
-                </div>
-                <Video movieId={movideId} />
-            </div>
+        <div className="flex justify-around mt-4">
+         
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-blue-500 w-full text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            Trailer
+          </button>
         </div>
-    );
+      </div>
+      {isModalOpen && <Modal isOpen={isModalOpen} movieId={data.id} onClose={() => setIsModalOpen(false)} />}
+    </div>
+  );
 };
+
+const Modal = ({ isOpen, onClose, movieId }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
+      <div className="relative w-full h-full flex items-center justify-center">
+        <button
+          onClick={onClose}
+          className="absolute top-5 right-5 text-white text-4xl bg-red-600 p-2 rounded-full hover:bg-red-800"
+        >
+          <FaWindowClose />
+        </button>
+        <div className="w-full h-full flex items-center justify-center">
+          <Video movieId={movieId} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default Card;

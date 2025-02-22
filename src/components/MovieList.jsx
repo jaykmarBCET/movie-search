@@ -6,7 +6,7 @@ export default function MovieList({movies}) {
  
   return (
     <>
-    <div className='flex flex-wrap my-4 justify-center '>
+    <div className='flex flex-wrap pt-10 bg-black my-4 justify-center '>
 
        {
           movies.length==0?<center className='text-center text-blue-500 m-auto'> Please Search</center>:''

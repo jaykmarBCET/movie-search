@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { MdSkipPrevious,MdSkipNext } from "react-icons/md";
-import Video from './Video';
 
 const Slides = ({ movies }) => {
     const [activeIndex, setActiveIndex] = useState(0);

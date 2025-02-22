@@ -1,24 +1,15 @@
 import React, { useEffect } from 'react'
 import MovieList from './MovieList';
+import { useMovie } from '../store/useMovie';
 
 export default function PopularMovie() {
-    const  [upcomingMovies, setUpcomingMovies] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
-    const [error, setError] = React.useState(null);
+    const {popular, popularMovie} = useMovie()
 
-    const getMovies = () => {
-      fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=f1791c340b1408803e2c923e32217f0b&append_to_response=videos")
-      .then((res) => res.json())
-      .then((res) => {
-        const getData = res.results;
-        setUpcomingMovies(getData);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-    };
+    
     useEffect(()=>{
-      getMovies();
+      setLoading(true)
+      popularMovie()
       setLoading(false);
      },[])
   return (
@@ -30,11 +21,9 @@ export default function PopularMovie() {
       loading ? <p>Loading...</p> :(
         <div>
           {
-            error?<h1>Something have an error {error}</h1>:(
               <div>
-                <MovieList movies={upcomingMovies}></MovieList>
+                {popular?<MovieList movies={popular}></MovieList>:""}
               </div>
-            )
           }
         </div>
       )

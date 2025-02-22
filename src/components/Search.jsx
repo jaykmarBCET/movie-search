@@ -1,39 +1,29 @@
-import React, { useState } from 'react'
+'use client'
 import MovieList from './MovieList';
+import { useMovie } from '../store/useMovie';
+import { useState } from 'react';
+
 
 export default function Search() {
-  const [movies , setMovies] = useState([]);
+  
   const [search , setSearch] = useState("");
- 
-  const apiKey = 'f1791c340b1408803e2c923e32217f0b';
+  const {searchMovieMovie,searchMovie} = useMovie()
+  
     
-  const handleSearch = () => {
+  const handleSearch = async () => {
       if (!search.trim()) {
           alert("Please enter a movie name!");
           return;
       }
 
-      const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(search)}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`;
-
-      const options = {
-          method: 'GET',
-          headers: {
-              accept: 'application/json'
-          }
-      };
-
-      fetch(url, options)
-          .then(res => res.json())
-          .then(res => setMovies(res.results || []))
-          .catch(err => console.error('error:', err));
-      setSearch("");
+     await searchMovieMovie(search)
   };
 
-  console.log(movies);
+ 
 
   return (
     <>
-    <div className='m-auto'>
+    <div className='m-auto min-h-[65vh]'>
       <center className='text-4xl mt-10 font-semibold'>Search Any movies</center>
 
       <div>
@@ -48,7 +38,9 @@ export default function Search() {
       </div>
     </div>
     <div>
-      <MovieList  movies={movies}/>
+      {
+        searchMovie?<MovieList  movies={searchMovie}/>:"please search movie"
+      }
     </div>
     </>
   )
