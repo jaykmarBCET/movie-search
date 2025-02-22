@@ -6,7 +6,7 @@ import PopularMovie from "./components/PopularMovie";
 import Search from "./components/Search";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import VideoDialog from "./components/videoDailog";
+import VideoDialog from "./components/VideoDailog";
 import './App.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
